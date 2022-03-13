@@ -1,3 +1,6 @@
-# NFT Marketplace
+# NFT Marketplace Initial
 
-This project is still under construction.
+This repo is the starting point of the Front-end section of this [Full-stack Ethereum Development course][course]
+
+
+[course]:https://www.youtube.com/playlist?list=PLClcacTLMggPDj8g7vfxZeW6F9gB1VDhA
