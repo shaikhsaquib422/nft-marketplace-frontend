@@ -1,12 +1,12 @@
 import classNames from "classnames";
 import CreationForm, { CreationValues } from "./CreationForm";
+import useSigner from "state/signers";
+import useNFTMarket from "state/nft-market";
 
 const CreationPage = () => {
-  const signer = null;
+  const signer = useSigner();
 
-  const onSubmit = async (values: CreationValues) => {
-    // TODO: create NFT
-  };
+  const { createNFT } = useNFTMarket();
 
   return (
     <div
@@ -14,7 +14,7 @@ const CreationPage = () => {
         "items-center justify-center": !signer,
       })}
     >
-      {signer ? <CreationForm onSubmit={onSubmit} /> : "Connect your wallet"}
+      {signer ? <CreationForm onSubmit={createNFT} /> : "Connect your wallet"}
     </div>
   );
 };
