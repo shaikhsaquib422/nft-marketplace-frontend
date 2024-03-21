@@ -1,8 +1,16 @@
+import { TransactionResponse } from "@ethersproject/abstract-provider";
+import { Contract, Transaction } from "ethers";
 import { CreationValues } from "modules/CreationPage/CreationForm";
+import NFT_MARKET from "../../../artifacts/contracts/NFTMarket.sol/NFTMarket.json";
+import useSigner from "state/signers";
 
-const NFT_MARKET_ADDRESS = process.env.NEXT_PUBLIC_NFT_MARKET_ADDRESS;
+const NFT_MARKET_ADDRESS = process.env.NEXT_PUBLIC_NFT_MARKET_ADDRESS as string;
 
 const useNFTMarket = () => {
+  const { signer } = useSigner();
+
+  const nftMarket = new Contract(NFT_MARKET_ADDRESS, NFT_MARKET.abi, signer);
+
   const createNFT = async (values: CreationValues) => {
     try {
       const data = new FormData();
@@ -17,7 +25,10 @@ const useNFTMarket = () => {
 
       if (response.status == 201) {
         const json = await response.json();
-        console.log("tokenURI:", json.uri);
+        const transaction: TransactionResponse = await nftMarket.createNFT(
+          json.uri
+        );
+        await transaction.wait();
       }
     } catch (e) {
       console.log(e);
